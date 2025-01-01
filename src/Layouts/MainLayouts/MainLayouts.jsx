@@ -8,11 +8,10 @@ const MainLayouts = () => {
 
     const [hideNav,setHIdeNav] = useState(false)
     useEffect(()=>{
-
         if(location.pathname === '/login' || location.pathname === '/register'){
             setHIdeNav(true)
         }
-    },[])
+    },[location.pathname])
     
     return (
         <div>

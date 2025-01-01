@@ -1,23 +1,46 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import loginbaanner from '../../assets/assets/others/authentication.png'
 import loginauth from '../../assets/assets/others/authentication2.png'
 import { Link } from 'react-router-dom';
 import { FaFacebookF, FaGithub, FaGoogle } from 'react-icons/fa';
+import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+
 
 const Login = () => {
+    const [isDisable,setDisable] = useState(true)
+    const captchaRef = useRef()
+    useEffect(()=>{
+        loadCaptchaEnginge(6);
+    },[])
+
+    const handleChaptcha =()=>{
+        const captcha_value = captchaRef.current.value
+        if(validateCaptcha(captcha_value)){
+            setDisable(false)
+        }else{
+            setDisable(true)
+        }
+        
+
+    }
+    // const regenerateCaptcha = () => {
+    //     loadCaptchaEnginge(6); // Reload CAPTCHA
+    //     captchaRef.current.value = ''; // Clear the input field
+    //     setDisable(true); // Disable the button until validated again
+    // };
     return (
         <div style={{
             backgroundImage: `url(${loginbaanner})`,
-            height: '100vh',
+            
             backgroundSize: 'cover'
 
-        }} className='flex items-center justify-center'>
-            <div className='border-2 flex  items-center justify-center w-[80%] h-[80%] shadow-slate-800 shadow-2xl'>
-                <div className='w-[50%]'>
+        }} className='flex items-center justify-center md:h-[100vh]'>
+            <div className='border-2 flex lg:flex-row md:flex-row flex-col  items-center justify-center w-[90%] md:w-[80%] md:h-[90%]  shadow-slate-800 shadow-2xl'>
+                <div className='md:w-[50%]'>
                     <img src={loginauth} className='w-[500px] m-auto' alt="" />
 
                 </div>
-                <div className='w-[50%] space-y-3 flex flex-col justify-center pl-20'>
+                <div className='md:w-[50%] space-y-3 flex flex-col justify-center md:pl-20'>
                     <p className='text-3xl font-semibold text-center w-full max-w-xs'>LOGIN</p>
                     <div>
                         <p>Email : </p>
@@ -27,15 +50,14 @@ const Login = () => {
                         <p>Password : </p>
                         <input type="password" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
                     </div>
+                    
                     <div>
-                        {/* <p>Password : </p> */}
-                        <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                        <label className='label'><LoadCanvasTemplate /></label>
+                        <input onBlur={handleChaptcha} type="text" ref={captchaRef}  placeholder="Type here" className="input input-bordered w-full max-w-xs" /><br />
+                        {/* <button className='p-1 px-3 bg-blue-600 text-white mt-2' >Validate</button> */}
+                     
                     </div>
-                    <div>
-                        <p>Reload Chaptcha : </p>
-                        <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
-                    </div>
-                    <Link className='bg-[#D1A054] w-full max-w-xs py-3 rounded-lg text-center font-semibold text-white'>Login</Link>
+                    <Link className={`bg-[#D1A054] w-full max-w-xs py-3 rounded-lg text-center font-semibold text-white  ${isDisable && 'cursor-not-allowed opacity-50'}`} disabled={isDisable}>Login</Link>
                     <Link to="/register" className='text-[#9c712f] hover:underline cursor-pointer'>New here? Create a New Account</Link>
                     <p className='text-black text-center w-full max-w-xs'>Or sign in with</p>
                     <div className='w-full max-w-xs flex items-center justify-center gap-4'>
