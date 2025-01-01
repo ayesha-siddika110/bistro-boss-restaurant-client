@@ -13,7 +13,7 @@ const Footer = () => {
                     </p>
                     <p className=''>Sat - Sun: 10:00 - 23:00</p>
                 </div>
-                <div className='bg-[#111827] h-full lg:w-[50%] md:w-[50%] flex flex-col items-center justify-center lg:pr-48 py-4 h-full'>
+                <div className='bg-[#111827] lg:w-[50%] md:w-[50%] flex flex-col items-center justify-center lg:pr-48 py-4 h-full'>
 
                 <p className='text-xl uppercase pb-3 font-semibold'>Follow US</p>
                     <p className=''>Join us on social media</p>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // import SimpleParallax from "simple-parallax-js";
 import img from '../../../assets/assets/home/featured.jpg'
 import Heading from '../../../componants/Share/Heading/Heading';
@@ -15,6 +15,9 @@ const FromOurMenu = () => {
         left: "50%",
         transform: "translate(-50%,-50%)"
     };
+
+
+    
     return (
         <div className=' m-auto py-20'>
 
