@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from '../../componants/Navbar/Navbar';
 import Footer from '../../componants/Footer/Footer';
 
 const MainLayouts = () => {
     const location = useLocation()
-    console.log(location.pathname);
-    const hideHederFooter = location.pathname === '/login'
+
+    const [hideNav,setHIdeNav] = useState(false)
+    useEffect(()=>{
+
+        if(location.pathname === '/login' || location.pathname === '/register'){
+            setHIdeNav(true)
+        }
+    },[])
     
     return (
         <div>
-            {hideHederFooter || <Navbar></Navbar>}
+            {hideNav || <Navbar></Navbar>}
             <Outlet></Outlet>
-            {hideHederFooter || <Footer></Footer>}
+            {hideNav || <Footer></Footer>}
             
         </div>
     );
