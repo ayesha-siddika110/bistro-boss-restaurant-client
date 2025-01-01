@@ -1,14 +1,18 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from '../../componants/Navbar/Navbar';
 import Footer from '../../componants/Footer/Footer';
 
 const MainLayouts = () => {
+    const location = useLocation()
+    console.log(location.pathname);
+    const hideHederFooter = location.pathname === '/login'
+    
     return (
         <div>
-            <Navbar></Navbar>
+            {hideHederFooter || <Navbar></Navbar>}
             <Outlet></Outlet>
-            <Footer></Footer>
+            {hideHederFooter || <Footer></Footer>}
             
         </div>
     );

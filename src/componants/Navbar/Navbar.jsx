@@ -44,7 +44,7 @@ const Navbar = () => {
                     <ul className="menu menu-horizontal px-1 font-semibold space-x-3 text-white">
                         {links}
                     </ul>
-                    <a className="border-b-4 rounded-b-md px-5 py-1 bg-orange-100 bg-opacity-30">Login</a>
+                    <Link to="/login" className="border-b-4 rounded-b-md px-5 py-1 bg-orange-100 bg-opacity-30">Login</Link>
                 </div>
 
             </div>
