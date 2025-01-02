@@ -7,6 +7,7 @@ import Home from "../Pages/Home/Home/Home";
 import OurMenu from "../Pages/OurMenu/OurMenu/OurMenu";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
+import PrivetRouter from "./PrivetRouter/PrivetRouter";
 
  export const router = createBrowserRouter([
     {
@@ -20,7 +21,7 @@ import Register from "../Pages/Register/Register";
         },
         {
           path: "/ourMenu",
-          element: <OurMenu></OurMenu>
+          element: <PrivetRouter><OurMenu></OurMenu></PrivetRouter>
         },
         {
           path: "/login",

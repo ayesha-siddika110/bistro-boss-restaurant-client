@@ -6,12 +6,8 @@ import Footer from '../../componants/Footer/Footer';
 const MainLayouts = () => {
     const location = useLocation()
 
-    const [hideNav,setHIdeNav] = useState(false)
-    useEffect(()=>{
-        if(location.pathname === '/login' || location.pathname === '/register'){
-            setHIdeNav(true)
-        }
-    },[location.pathname])
+    // const [hideNav,setHIdeNav] = useState(false)
+    const hideNav = location.pathname === '/login' || location.pathname === '/register'
     
     return (
         <div>

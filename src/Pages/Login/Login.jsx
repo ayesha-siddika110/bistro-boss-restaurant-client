@@ -1,13 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import loginbaanner from '../../assets/assets/others/authentication.png'
 import loginauth from '../../assets/assets/others/authentication2.png'
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaFacebookF, FaGithub, FaGoogle } from 'react-icons/fa';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
+import { useForm } from 'react-hook-form';
 
 
 const Login = () => {
     const [isDisable,setDisable] = useState(true)
+    const {loginUser} = useContext(AuthContext)
+    const { register, handleSubmit,formState: { errors }, } = useForm()
+
+    const location = useLocation()
+    const navigate = useNavigate()
+    const from = location.state?.from?.pathname || "/";
+    
     const captchaRef = useRef()
     useEffect(()=>{
         loadCaptchaEnginge(6);
@@ -22,6 +31,20 @@ const Login = () => {
         }
         
 
+    }
+
+    const onSubmit = (data) => {
+        loginUser(data?.email , data?.password )
+        .then(res=>{
+            console.log(res);
+            navigate(from, {replace: true})
+            
+        })
+        .catch(err=>{
+            console.log(err.message);
+            
+        })
+        
     }
     // const regenerateCaptcha = () => {
     //     loadCaptchaEnginge(6); // Reload CAPTCHA
@@ -40,15 +63,15 @@ const Login = () => {
                     <img src={loginauth} className='w-[500px] m-auto' alt="" />
 
                 </div>
-                <div className='md:w-[50%] space-y-3 flex flex-col justify-center md:pl-20'>
+                <form onSubmit={handleSubmit(onSubmit)} className='md:w-[50%] space-y-3 flex flex-col justify-center md:pl-20'>
                     <p className='text-3xl font-semibold text-center w-full max-w-xs'>LOGIN</p>
                     <div>
                         <p>Email : </p>
-                        <input type="email"  placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                        <input {...register("email")} name="email" type="email"  placeholder="Type here" className="input input-bordered w-full max-w-xs" />
                     </div>
                     <div>
                         <p>Password : </p>
-                        <input type="password" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                        <input {...register("password")} name='password' type="password" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
                     </div>
                     
                     <div>
@@ -57,7 +80,7 @@ const Login = () => {
                         {/* <button className='p-1 px-3 bg-blue-600 text-white mt-2' >Validate</button> */}
                      
                     </div>
-                    <Link className={`bg-[#D1A054] w-full max-w-xs py-3 rounded-lg text-center font-semibold text-white  ${isDisable && 'cursor-not-allowed opacity-50'}`} disabled={isDisable}>Login</Link>
+                    <button className={`bg-[#D1A054] w-full max-w-xs py-3 rounded-lg text-center font-semibold text-white  ${isDisable && 'cursor-not-allowed opacity-50'}`} >Login</button>
                     <Link to="/register" className='text-[#9c712f] hover:underline cursor-pointer'>New here? Create a New Account</Link>
                     <p className='text-black text-center w-full max-w-xs'>Or sign in with</p>
                     <div className='w-full max-w-xs flex items-center justify-center gap-4'>
@@ -65,7 +88,7 @@ const Login = () => {
                     <FaGoogle className='text-3xl border border-black p-1 rounded-full' />
                     <FaGithub className='text-3xl border border-black p-1 rounded-full' />
                     </div>
-                </div>
+                </form>
 
             </div>
 

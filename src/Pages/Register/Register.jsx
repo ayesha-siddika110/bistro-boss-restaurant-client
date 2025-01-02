@@ -1,13 +1,46 @@
 
-import React from 'react';
+import React, { useContext } from 'react';
 import loginbaanner from '../../assets/assets/others/authentication.png'
 import loginauth from '../../assets/assets/others/authentication2.png'
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaFacebookF, FaGithub, FaGoogle } from 'react-icons/fa';
 import { useForm } from "react-hook-form"
+import { AuthContext } from '../../AuthProvider/AuthProvider';
 const Register = () => {
+    const {createUser,updateUserProfile} = useContext(AuthContext)
     const { register, handleSubmit,formState: { errors }, } = useForm()
-    const onSubmit = (data) => console.log(data)
+    const location = useLocation()
+    const navigate = useNavigate()
+    const from = location.state?.from?.pathname || "/";
+    // console.log(location.state?.from?.pathname);
+    
+    const onSubmit = (data) => {
+        createUser(data?.email , data?.password )
+        .then(res=>{
+            console.log(res);
+            const updatedatas = {
+                displayName : data?.name,
+                photoURL : data?.photo,
+            }
+            updateUserProfile(updatedatas)
+            .then(res=>{
+                console.log(res);
+                // reset()
+                navigate(from, {replace: true})
+                
+            })
+            .catch(err=>{
+                console.log(err);
+                
+            })
+            
+        })
+        .catch(err=>{
+            console.log(err.message);
+            
+        })
+        
+    }
     return (
         <div style={{
             backgroundImage: `url(${loginbaanner})`,
