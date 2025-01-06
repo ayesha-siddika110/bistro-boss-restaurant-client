@@ -23,13 +23,13 @@ const Navbar = () => {
     }
 
     const links = <>
-        <Link>HOME</Link>
+        <Link to="/">HOME</Link>
         <Link>CONTACT US</Link>
         <Link>DASHBOARD</Link>
         <Link to="/ourMenu">OUR MENU</Link>
         <Link to="/ourShop">OUR SHOP</Link>
-        <Link to="/dashboard/cart" className="relative flex items-center">
-            <Link to="/dashboard/cart" className=" text-2xl px-4"><FaShoppingCart /></Link>
+        <Link to="/dashboard" className="relative flex items-center">
+            <Link to="/dashboard" className=" text-2xl px-4"><FaShoppingCart /></Link>
             <span className="absolute -top-5 right-0 bg-orange-600 px-2 py-0 text-center rounded-full">{cart?.length}</span>
         </Link>
 

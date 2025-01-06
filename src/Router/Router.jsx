@@ -9,8 +9,9 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import PrivetRouter from "./PrivetRouter/PrivetRouter";
 import OurShop from "../Pages/OurShop/OurShop";
-import Dashboard from "../Layouts/Dashboard/Dashboard";
-import Cart from "../Layouts/Dashboard/Sidebar/Cart/Cart";
+import Cart from "../Pages/Dashboard/Sidebar/Cart/Cart";
+import Dashboard from "../Pages/Dashboard/Dashboard/Dashboard";
+import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 
 
  export const router = createBrowserRouter([
@@ -42,12 +43,21 @@ import Cart from "../Layouts/Dashboard/Sidebar/Cart/Cart";
       ]
     },
     {
-      path: 'dashboard',
+      path: '/dashboard',
       element: <Dashboard></Dashboard>,
       children: [
         {
-          path: 'cart',
+          path: '/dashboard/myCart',
           element: <Cart></Cart>
+        },
+        // {
+        //   path: '/dashboard',
+        //   element: <Dashboard></Dashboard>
+        // },
+        {
+          path: '/dashboard/allUsers',
+          element: <AllUsers></AllUsers>
+          
         }
       ]
 

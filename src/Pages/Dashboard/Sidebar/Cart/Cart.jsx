@@ -1,6 +1,7 @@
 import React from 'react';
 import useCart from '../../../../Hooks/useCart';
 
+
 const Cart = () => {
     const [cart] = useCart()
     console.log(cart);

@@ -26,7 +26,7 @@ const Testimonials = () => {
       <div className='w-[80%] m-auto'>
         <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
           {
-            reviews?.map((item,idx)=> <SwiperSlide>
+            reviews?.map((item,idx)=> <SwiperSlide key={idx}>
             <Testimon_Card rating={item?.rating} para={item?.details} name={item?.name}></Testimon_Card>
            </SwiperSlide>)
           }
