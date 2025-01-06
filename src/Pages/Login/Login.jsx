@@ -1,22 +1,27 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+/* eslint-disable no-unused-vars */
+import  { useEffect, useRef, useState } from 'react';
 import loginbaanner from '../../assets/assets/others/authentication.png'
 import loginauth from '../../assets/assets/others/authentication2.png'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FaFacebookF, FaGithub, FaGoogle } from 'react-icons/fa';
-import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
-import { AuthContext } from '../../AuthProvider/AuthProvider';
+// import { FaFacebookF, FaGithub, FaGoogle } from 'react-icons/fa';
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
+// import { AuthContext } from '../../AuthProvider/AuthProvider';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../Hooks/useAuth';
+// import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import { toast } from 'react-toastify';
+import SocialLogin from '../../componants/SocialLogin/SocialLogin';
 
 
 const Login = () => {
-    const [isDisable,setDisable] = useState(true)
-    const {loginUser,signInWithGoogle} = useAuth()
+    const [isDisable,setDisable] = useState(false) //TODO : convert to true
+    const {loginUser} = useAuth()
     const { register, handleSubmit,formState: { errors }, } = useForm()
 
     const location = useLocation()
     const navigate = useNavigate()
     const from = location.state?.from?.pathname || "/";
+
     
     const captchaRef = useRef()
     useEffect(()=>{
@@ -37,6 +42,7 @@ const Login = () => {
     const onSubmit = (data) => {
         loginUser(data?.email , data?.password )
         .then(res=>{
+            toast.success('Succesfully Login')
             console.log(res);
             navigate(from, {replace: true})
             
@@ -48,17 +54,7 @@ const Login = () => {
         
     }
 
-    const handleGoogleLogin =()=>{
-        signInWithGoogle()
-        .then(res=>{
-            console.log(res);
-            
-        })
-        .catch(err=>{
-            console.log(err);
-            
-        })
-    }
+   
     // const regenerateCaptcha = () => {
     //     loadCaptchaEnginge(6); // Reload CAPTCHA
     //     captchaRef.current.value = ''; // Clear the input field
@@ -96,11 +92,7 @@ const Login = () => {
                     <button className={`bg-[#D1A054] w-full max-w-xs py-3 rounded-lg text-center font-semibold text-white  ${isDisable && 'cursor-not-allowed opacity-50'}`} >Login</button>
                     <Link to="/register" className='text-[#9c712f] hover:underline cursor-pointer'>New here? Create a New Account</Link>
                     <p className='text-black text-center w-full max-w-xs'>Or sign in with</p>
-                    <div className='w-full max-w-xs flex items-center justify-center gap-4'>
-                    <FaFacebookF className='text-3xl border border-black p-1 rounded-full' />
-                    <FaGoogle onClick={handleGoogleLogin} className='text-3xl border border-black p-1 rounded-full' />
-                    <FaGithub className='text-3xl border border-black p-1 rounded-full' />
-                    </div>
+                    <SocialLogin></SocialLogin>
                 </form>
 
             </div>

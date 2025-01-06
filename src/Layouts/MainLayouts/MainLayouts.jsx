@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+
 import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from '../../componants/Navbar/Navbar';
 import Footer from '../../componants/Footer/Footer';
+import { ToastContainer } from 'react-toastify';
 
 const MainLayouts = () => {
     const location = useLocation()
@@ -11,6 +12,7 @@ const MainLayouts = () => {
     
     return (
         <div>
+            <ToastContainer autoClose={3000} />
             {hideNav || <Navbar></Navbar>}
             <Outlet></Outlet>
             {hideNav || <Footer></Footer>}

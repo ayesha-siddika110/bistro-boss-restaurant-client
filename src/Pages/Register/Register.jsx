@@ -1,11 +1,14 @@
 
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import loginbaanner from '../../assets/assets/others/authentication.png'
 import loginauth from '../../assets/assets/others/authentication2.png'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FaFacebookF, FaGithub, FaGoogle } from 'react-icons/fa';
+// import { FaFacebookF, FaGithub, FaGoogle } from 'react-icons/fa';
 import { useForm } from "react-hook-form"
 import { AuthContext } from '../../AuthProvider/AuthProvider';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import { toast } from 'react-toastify';
+import SocialLogin from '../../componants/SocialLogin/SocialLogin';
 const Register = () => {
     const {createUser,updateUserProfile} = useContext(AuthContext)
     const { register, handleSubmit,formState: { errors }, } = useForm()
@@ -13,6 +16,7 @@ const Register = () => {
     const navigate = useNavigate()
     const from = location.state?.from?.pathname || "/";
     // console.log(location.state?.from?.pathname);
+    const axiosPublic = useAxiosPublic()
     
     const onSubmit = (data) => {
         createUser(data?.email , data?.password )
@@ -25,6 +29,19 @@ const Register = () => {
             updateUserProfile(updatedatas)
             .then(res=>{
                 console.log(res);
+                const userData = {
+                    name : data?.name,
+                    email: data?.email,
+                    photo: data?.photo,
+                }
+                axiosPublic.post('/users', userData)
+                .then(res=>{
+                    console.log(res.data);
+                    if(res.data.insertedId){
+                        toast.success('Successfully Register & save to database')
+                    }
+                    
+                })
                 // reset()
                 navigate(from, {replace: true})
                 
@@ -57,7 +74,7 @@ const Register = () => {
                     </div>
                     <div>
                         <p>Photo : </p>
-                        <input {...register("Photo")} name='Photo' type="text" placeholder="Type here" className="input input-bordered w-full md:max-w-xs" />
+                        <input {...register("photo")} name='photo' type="text" placeholder="Type here" className="input input-bordered w-full md:max-w-xs" />
                     </div>
                     <div>
                         <p>Email : </p>
@@ -77,11 +94,7 @@ const Register = () => {
                     <button className='bg-[#D1A054] w-full max-w-xs py-3 rounded-lg text-center font-semibold text-white'>Register</button>
                     <Link to="/login" className='text-[#9c712f] hover:underline cursor-pointer'>Already registered? Go to log in</Link>
                     <p className='text-black text-center w-full max-w-xs'>Or sign in with</p>
-                    <div className='w-full max-w-xs flex items-center justify-center gap-4'>
-                        <FaFacebookF className='text-3xl border border-black p-1 rounded-full' />
-                        <FaGoogle className='text-3xl border border-black p-1 rounded-full' />
-                        <FaGithub className='text-3xl border border-black p-1 rounded-full' />
-                    </div>
+                    <SocialLogin></SocialLogin>
                 </form>
                 <div className='w-[50%]'>
                     <img src={loginauth} className='w-[500px] m-auto' alt="" />

@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import { FaArrowRight, FaShoppingCart } from 'react-icons/fa';
 import useCart from '../../Hooks/useCart';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
     const { user, signOutUser } = useContext(AuthContext)
@@ -11,6 +12,7 @@ const Navbar = () => {
         signOutUser()
             .then(res => {
                 console.log(res);
+                toast.success('logout')
 
             })
             .catch(err => {
@@ -41,7 +43,7 @@ const Navbar = () => {
                     <div className="drawer-content ">
                         {/* Page content here */}
                         <label htmlFor="my-drawer-4" className="drawer-button ">
-                            <img src={user?.photoURL} alt="Profile" className="border w-12 h-12 rounded-full" /></label>
+                            <img src={user?.photoURL} referrerPolicy='noRefferel' alt="Profile" className="border w-12 h-12 rounded-full object-cover" /></label>
                     </div>
                     <div className="drawer-side z-50">
                         <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
