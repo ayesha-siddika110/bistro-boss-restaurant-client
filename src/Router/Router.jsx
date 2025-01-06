@@ -8,6 +8,10 @@ import OurMenu from "../Pages/OurMenu/OurMenu/OurMenu";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import PrivetRouter from "./PrivetRouter/PrivetRouter";
+import OurShop from "../Pages/OurShop/OurShop";
+import Dashboard from "../Layouts/Dashboard/Dashboard";
+import Cart from "../Layouts/Dashboard/Sidebar/Cart/Cart";
+
 
  export const router = createBrowserRouter([
     {
@@ -31,6 +35,21 @@ import PrivetRouter from "./PrivetRouter/PrivetRouter";
           path: "/register",
           element: <Register></Register>
         },
+        {
+          path: "/ourShop",
+          element: <OurShop></OurShop>
+        },
       ]
     },
+    {
+      path: 'dashboard',
+      element: <Dashboard></Dashboard>,
+      children: [
+        {
+          path: 'cart',
+          element: <Cart></Cart>
+        }
+      ]
+
+    }
   ]);

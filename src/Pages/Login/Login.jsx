@@ -6,11 +6,12 @@ import { FaFacebookF, FaGithub, FaGoogle } from 'react-icons/fa';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import { useForm } from 'react-hook-form';
+import useAuth from '../../Hooks/useAuth';
 
 
 const Login = () => {
     const [isDisable,setDisable] = useState(true)
-    const {loginUser} = useContext(AuthContext)
+    const {loginUser,signInWithGoogle} = useAuth()
     const { register, handleSubmit,formState: { errors }, } = useForm()
 
     const location = useLocation()
@@ -45,6 +46,18 @@ const Login = () => {
             
         })
         
+    }
+
+    const handleGoogleLogin =()=>{
+        signInWithGoogle()
+        .then(res=>{
+            console.log(res);
+            
+        })
+        .catch(err=>{
+            console.log(err);
+            
+        })
     }
     // const regenerateCaptcha = () => {
     //     loadCaptchaEnginge(6); // Reload CAPTCHA
@@ -85,7 +98,7 @@ const Login = () => {
                     <p className='text-black text-center w-full max-w-xs'>Or sign in with</p>
                     <div className='w-full max-w-xs flex items-center justify-center gap-4'>
                     <FaFacebookF className='text-3xl border border-black p-1 rounded-full' />
-                    <FaGoogle className='text-3xl border border-black p-1 rounded-full' />
+                    <FaGoogle onClick={handleGoogleLogin} className='text-3xl border border-black p-1 rounded-full' />
                     <FaGithub className='text-3xl border border-black p-1 rounded-full' />
                     </div>
                 </form>
